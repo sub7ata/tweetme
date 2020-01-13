@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} Register | {{ block.super }}{% endblock title %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-6 offset-md-3">
+		<div class="card col align-self-center" style="background-color: #F5F8FA; ">
+			<div class="card-body">
+				  <h3 class="text-center">Register</h3>
+				<form  class='form {% if form_class %}{{ form_class }}{% endif %}' action="{% if action_url %}{{ action_url }}{% endif %}" method="post">
+				{% csrf_token %}
+				{{ form | crispy }}
+				<input class="btn btn-primary" type="submit" value="Register">
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock content %}

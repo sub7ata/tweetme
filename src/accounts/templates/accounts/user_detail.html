@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+<!-- {% load recommended %} -->
+
+{% block script %}
+<script>
+$(document).ready(function(){
+  loadTweetContainer("tweet-container")
+});
+</script>
+{% endblock script %}
+
+{% block content %}
+
+
+<div class="container">
+  <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+  <div class="row">
+    <div class="col-sm-3">
+       <div class="card">
+         <!--  <h5 class="card-header"></h5> -->
+          <div class="card-body">
+            <h5 class="card-title">@{{ object.username }}</h5>
+            <hr>
+            <p class="card-text">Followers: {{ object.followed_by.all.count }} <br>
+              <a class='btn btn-link' href='{{ object.profile.get_follow_url }}'>
+          {% if following %} Unfollow {% else %} Follow {% endif %}
+        </a>
+            </p>
+            <hr>
+      <p>Following <small>{{ object.profile.get_following.count }}</small> </p>
+
+        {% for user in object.profile.get_following %}
+        <a href='/{{ user.username }}'>{{ user.username }}<br></a>
+        {% empty %}
+        <p>Not following any users</p>
+        {% endfor %}
+
+      <hr>
+      <p>Followed By</p>
+        {% for profile in object.followed_by.all %}
+        <a href='/{{ profile.user.username }}'>{{ profile.user.username }}<br></a>
+        {% empty %}
+        <p>Not followed by any users</p>
+        {% endfor %}
+            
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-9">
+          <h1>Tweets</h1>
+
+      <div id='tweet-container' data-url='/api/{{ object.username }}/tweet/'>
+
+      </div>
+
+      <a href="#" id="loadmore"> Load More Tweets </a>
+
+    </div>
+  </div>
+
+
+
+
+
+
+<!-- <div class="row">
+  <div class="container">
+    <div class="col-sm-3" >
+      <h1>{{  object.username    }}</h1>
+      <hr>
+      <p>Followers: {{ object.followed_by.all.count }}</p>
+      <p>
+        <a class='btn btn-link' href='{{ object.profile.get_follow_url }}'>
+          {% if following %} Unfollow {% else %} Follow {% endif %}
+        </a>
+      </p>
+      <hr>
+      <h1>Following <small>{{ object.profile.get_following.count }}</small> </h1>
+
+        {% for user in object.profile.get_following %}
+        <a href='/{{ user.username }}'>{{ user.username }}<br></a>
+        {% empty %}
+        <h4>Not following any users</h4>
+        {% endfor %}
+
+      <hr>
+      <h1>Followed By</h1>
+        {% for profile in object.followed_by.all %}
+        <a href='/{{ profile.user.username }}'>{{ profile.user.username }}<br></a>
+        {% empty %}
+        <h4>Not followed by any users</h4>
+        {% endfor %} -->
+
+<!--
+      <h1>Recommended to follow</h1>
+      {% recommended request.user %} -->
+
+
+
+<!--     </div>
+    <div class="col-sm-9">
+      <h1>Tweets</h1>
+
+      <div id='tweet-container' data-url='/api/{{ object.username }}/tweet/'>
+
+      </div>
+
+      <a href="#" id="loadmore"> Load More Tweets </a> -->
+
+
+      <!-- {% for tweet in object.tweet_set.all %}
+      {{ tweet }}<br>
+      {% endfor %} -->
+
+
+
+
+<!-- 
+    </div>
+  </div> -->
+</div>
+{% endblock content %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load recommended %}
+<style media="screen">
+  #tweet-container
+</style>
+
+
+{% block script %}
+<script>
+$(document).ready(function(){
+  loadTweetContainer("tweet-container")
+});
+</script>
+{% endblock script %}
+
+
+{% block content %}
+<div class="row">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">@{{ request.user }}</h5>
+            <hr>
+            <p class="card-text">Recommended Users <br>
+              {% recommended request.user %}
+            </p>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-9">
+        {% if not request.GET.q %}
+          <div class="">
+            {% include "tweets/form.html" with form=create_form action_url=create_url btn_title="Tweet" form_class='tweet-form' %}
+          </div>
+          <hr>
+        {% endif %}
+        <div id='tweet-container' data-url='/api/tweet/'>
+        </div>
+        <a href="#" id="loadmore"> Load More Tweets </a>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
